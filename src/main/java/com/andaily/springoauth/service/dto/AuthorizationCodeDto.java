@@ -75,6 +75,6 @@ public class AuthorizationCodeDto implements Serializable {
     * */
     public String getFullUri() throws UnsupportedEncodingException {
         String redirect = URLEncoder.encode(redirectUri, "UTF-8");
-        return String.format("%s?response_type=%s&scope=%s&client_id=%s&redirect_uri=%s&state=%s", userAuthorizationUri, responseType, scope, clientId, redirect, state);
+        return String.format("%s?responseType=%s&scope=%s&appNum=%s&redirectUrl=%s&state=%s", userAuthorizationUri, responseType, scope, clientId, redirect, state);
     }
 }

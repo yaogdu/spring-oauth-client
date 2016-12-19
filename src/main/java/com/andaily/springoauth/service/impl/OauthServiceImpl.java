@@ -163,7 +163,7 @@ public class OauthServiceImpl implements OauthService {
 
     @Override
     public AccessTokenDto refreshAccessTokenDto(RefreshAccessTokenDto refreshAccessTokenDto) {
-        final String fullUri = refreshAccessTokenDto.getRefreshAccessTokenUri();
+        final String fullUri = refreshAccessTokenDto.getRefreshAccessTokenUrl();
         logger.debug("Get refresh_access_token URL: {}", fullUri);
 
         return loadAccessTokenDto(fullUri, refreshAccessTokenDto.getRefreshTokenParams());

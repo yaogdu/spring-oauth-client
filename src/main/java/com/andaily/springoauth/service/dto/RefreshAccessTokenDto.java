@@ -11,41 +11,44 @@ import java.util.Map;
  */
 public class RefreshAccessTokenDto implements Serializable {
 
-    private String refreshAccessTokenUri;
-    private String clientId;
-    private String clientSecret;
+    private String refreshAccessTokenUrl;
+    private String appNum;
+    private String appSecretKey;
 
     private String grantType = "refresh_token";
 
     private String refreshToken;
 
 
+    public String getRefreshAccessTokenUrl() {
+        return refreshAccessTokenUrl;
+    }
+
+    public void setRefreshAccessTokenUrl(String refreshAccessTokenUrl) {
+        this.refreshAccessTokenUrl = refreshAccessTokenUrl;
+    }
+
+    public String getAppNum() {
+        return appNum;
+    }
+
+    public void setAppNum(String appNum) {
+        this.appNum = appNum;
+    }
+
+    public String getAppSecretKey() {
+        return appSecretKey;
+    }
+
+    public void setAppSecretKey(String appSecretKey) {
+        this.appSecretKey = appSecretKey;
+    }
+
     public RefreshAccessTokenDto() {
+
     }
 
-    public String getRefreshAccessTokenUri() {
-        return refreshAccessTokenUri;
-    }
 
-    public void setRefreshAccessTokenUri(String refreshAccessTokenUri) {
-        this.refreshAccessTokenUri = refreshAccessTokenUri;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
-    }
-
-    public String getClientSecret() {
-        return clientSecret;
-    }
-
-    public void setClientSecret(String clientSecret) {
-        this.clientSecret = clientSecret;
-    }
 
     public String getGrantType() {
         return grantType;
@@ -68,11 +71,11 @@ public class RefreshAccessTokenDto implements Serializable {
     * */
     public Map<String, String> getRefreshTokenParams() {
         Map<String, String> map = new HashMap<>();
-        map.put("client_id", clientId);
+        map.put("appNum", appNum);
 
-        map.put("client_secret", clientSecret);
-        map.put("grant_type", grantType);
-        map.put("refresh_token", refreshToken);
+        map.put("appSecretKey", appSecretKey);
+        map.put("grantType", grantType);
+        map.put("refreshToken", refreshToken);
 
         return map;
     }
