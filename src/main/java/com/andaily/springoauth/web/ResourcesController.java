@@ -2,8 +2,10 @@ package com.andaily.springoauth.web;
 
 import com.andaily.springoauth.service.OauthService;
 import com.andaily.springoauth.service.dto.CustomerDto;
+import com.andaily.springoauth.service.dto.PayVO;
 import com.andaily.springoauth.service.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,9 @@ public class ResourcesController {
 
     @Autowired
     private OauthService oauthService;
+
+    @Value("#{properties['payUrl']}")
+    private String payUrl;
 
     /*
      * Visit unity role for get user information from oauth server
@@ -44,11 +49,36 @@ public class ResourcesController {
      * Visit unity role for get user information from oauth server
      */
     @RequestMapping("pay")
-    public String pay(String access_token, Model model,HttpServletRequest request) {
-        String result = oauthService.pay(access_token,request);
+    public String pay(String access_token, Model model, HttpServletRequest request) {
+        String result = oauthService.pay(access_token, request);
 
         model.addAttribute("result", result);
         return "resources/unity_user_info";
+
+    }
+
+    /*
+  * Visit unity role for get user information from oauth server
+  */
+    @RequestMapping("realPay")
+    public String realPay(PayVO payVO, Model model, HttpServletRequest request) {
+        String result = oauthService.realPay(payVO, request);
+
+        model.addAttribute("result", result);
+        return "resources/unity_user_info";
+
+    }
+
+    /*
+  * Visit unity role for get user information from oauth server
+  */
+    @RequestMapping("to_pay")
+    public String toPay(String access_token, Model model, HttpServletRequest request) {
+
+        model.addAttribute("accessToken", access_token);
+        model.addAttribute("payUrl", payUrl);
+
+        return "resources/pay";
 
     }
 
@@ -58,7 +88,7 @@ public class ResourcesController {
     */
     @RequestMapping("customerinfo")
     public String customerinfo(String access_token, Model model, HttpServletRequest request) {
-        CustomerDto result = oauthService.readCustomerInfo(access_token,request);
+        CustomerDto result = oauthService.readCustomerInfo(access_token, request);
 
         model.addAttribute("result", result.getOriginalText());
         return "resources/unity_user_info";

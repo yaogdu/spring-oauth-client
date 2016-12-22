@@ -15,6 +15,8 @@ public interface OauthService {
 
     String pay(String accessToken,HttpServletRequest request);
 
+    String realPay(PayVO payVO,HttpServletRequest request);
+
     AccessTokenDto retrieveAccessTokenDto(AuthAccessTokenDto tokenDto);
 
     AuthAccessTokenDto createAuthAccessTokenDto(AuthCallbackDto callbackDto);

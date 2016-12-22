@@ -55,30 +55,30 @@
 
                 <div ng-show="visible">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">client_id</label>
+                        <label class="col-sm-2 control-label">appNum</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="client_id" required="required"
-                                   ng-model="clientId"/>
+                            <input type="text" class="form-control" name="appNum" required="required"
+                                   ng-model="appNum"/>
 
-                            <p class="help-block">客户端从 Oauth Server 申请的client_id, 有的Oauth服务器中又叫 appKey</p>
+                            <p class="help-block">客户端从 Oauth Server 申请的appNum, 有的Oauth服务器中又叫 appKey</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">client_secret</label>
+                        <label class="col-sm-2 control-label">appSecretKey</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="client_secret" required="required"
-                                   ng-model="clientSecret"/>
+                            <input type="text" class="form-control" name="appSecretKey" required="required"
+                                   ng-model="appSecretKey"/>
 
-                            <p class="help-block">客户端从 Oauth Server 申请的client_secret, 有的Oauth服务器中又叫 appSecret</p>
+                            <p class="help-block">客户端从 Oauth Server 申请的appSecretKey, 有的Oauth服务器中又叫 appSecret</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">grant_type</label>
+                        <label class="col-sm-2 control-label">grantType</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="grant_type" readonly="readonly"
+                            <input type="text" class="form-control" name="grantType" readonly="readonly"
                                    ng-model="grantType"/>
 
                             <p class="help-block">固定值 'password'</p>
@@ -91,24 +91,22 @@
                         <div class="col-sm-10">
                             <select name="scope" ng-model="scope" class="form-control">
                                 <option value="read">read</option>
-                                <option value="write">write</option>
-                                <option value="read write">read write</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">username</label>
+                        <label class="col-sm-2 control-label">商户号</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" name="username" required="required"
-                                   ng-model="username"/>
+                            <input type="text" class="form-control" name="customerNum" required="required"
+                                   ng-model="customerNum"/>
 
                             <p class="help-block">用户在 Oauth Server 中的账号名称</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">password</label>
+                        <label class="col-sm-2 control-label">商户密码</label>
 
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="password" required="required"
@@ -130,15 +128,15 @@
 
 <script>
     var PasswordCtrl = ['$scope', function ($scope) {
-        $scope.clientId = "mobile-client";
-        $scope.clientSecret = "mobile";
+        $scope.appNum = "10101114787739180621034";
+        $scope.appSecretKey = "64db096fae1549c6876c2a025e9621161689a32d";
         $scope.grantType = "password";
 
-        $scope.username = "mobile";
-        $scope.password = "mobile";
-        $scope.scope = "read write";
+        $scope.customerNum = "10001114515422820071874";
+        $scope.password = "111";
+        $scope.scope = "read";
 
-        $scope.visible = false;
+        $scope.visible = true;
 
         $scope.showParams = function () {
             $scope.visible = !$scope.visible;

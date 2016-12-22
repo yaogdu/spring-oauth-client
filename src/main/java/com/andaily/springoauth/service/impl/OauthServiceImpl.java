@@ -27,27 +27,26 @@ import java.util.Map;
 public class OauthServiceImpl implements OauthService {
 
 
-
     private static final Logger logger = LoggerFactory.getLogger(OauthServiceImpl.class);
 
     @Resource
     HttpUtil httpUtil;
 
     @Value("#{properties['access-token-uri']}")
-    private String              accessTokenUri;
+    private String accessTokenUri;
 
     @Value("#{properties['unityUserInfoUri']}")
-    private String              unityUserInfoUri;
+    private String unityUserInfoUri;
 
     @Value("#{properties['payUrl']}")
-    private String              payUrl;
+    private String payUrl;
 
     @Value("#{properties['customerInfoUrl']}")
-    private String              customerInfoUrl;
+    private String customerInfoUrl;
 
     @Override
     public CustomerDto readCustomerInfo(String accessToken, HttpServletRequest request) {
-        HttpClientExecutor executor = new HttpClientExecutor(customerInfoUrl+"/0d4b2ada0261d0281ec97e4eb498a9c7");
+        HttpClientExecutor executor = new HttpClientExecutor(customerInfoUrl + "/0d4b2ada0261d0281ec97e4eb498a9c7");
         CustomerDtoResponseHandler responseHandler = new CustomerDtoResponseHandler();
         executor.contentType("application/json");
 
@@ -56,7 +55,7 @@ public class OauthServiceImpl implements OauthService {
     }
 
     @Override
-    public String pay(String accessToken,HttpServletRequest request) {
+    public String pay(String accessToken, HttpServletRequest request) {
         if (StringUtils.isEmpty(accessToken)) {
             return null;
         } else {
@@ -66,51 +65,51 @@ public class OauthServiceImpl implements OauthService {
             JSONObject data = new JSONObject();
 
             data.put("accessToken", accessToken);
-            data.put("customerOpenId","6c20341b522bbd690764dc05d0d73789");
-            data.put("machineNum","10011014799900375250386");
-            data.put("shopNum","de71d2e9153a4b11871c6a8b482b2fd62afaa564");
-            data.put("requestNum",System.currentTimeMillis()+""+System.currentTimeMillis());
-            data.put("amount","0.01");
-            data.put("source","API");
-            data.put("tableNum","15");
-            data.put("callbackUrl","http://www.baidu.com");
+            data.put("customerOpenId", "833ecdb7191e5450f47c6185c52f1686");
+            data.put("machineNum", "10011014824014525320758");
+            data.put("shopNum", "10001214824009784890145");
+            data.put("requestNum", System.currentTimeMillis() + "" + System.currentTimeMillis());
+            data.put("amount", "0.01");
+            data.put("source", "API");
+            data.put("tableNum", "15");
+            data.put("callbackUrl", "http://www.baidu.com");
 
 
             JSONObject extraInfo = new JSONObject();
 
-            extraInfo.put("pickNum","071");
-            extraInfo.put("menuList","青椒鸡蛋40.00*2,农家小炒肉50.00*3");
+            extraInfo.put("pickNum", "071");
+            extraInfo.put("menuList", "青椒鸡蛋40.00*2,农家小炒肉50.00*3");
 
-            data.put("extraInfo",extraInfo.toString());
+            data.put("extraInfo", extraInfo.toString());
 
 
-            Map<String,String> headers = new HashMap<>();
+            Map<String, String> headers = new HashMap<>();
 
-            Map<String,String> tokenParams = new HashMap<>();
+            Map<String, String> tokenParams = new HashMap<>();
 
             String accessKey = "35649fdf38be45858ba7ea1de9404e0bd58c9846";
             String secretKey = "12f3d4f076944921857ff10def2ef3c974d6c04f";//根据accessKey从passport_center库的key_pair表中查询
 
-            String timestamp = System.currentTimeMillis()+"";
+            String timestamp = System.currentTimeMillis() + "";
 
             String path = "/v1/payurl/create";
 
-            headers.put("accessToken",accessToken);
-            headers.put("accessKey",accessKey);
-            headers.put("timestamp",timestamp);
+            headers.put("accessToken", accessToken);
+            headers.put("accessKey", accessKey);
+            headers.put("timestamp", timestamp);
 
 
-            tokenParams.put("timestamp",timestamp);
-            tokenParams.put("secretKey",secretKey);
-            tokenParams.put("path",path);
-            tokenParams.put("body",data.toString());
+            tokenParams.put("timestamp", timestamp);
+            tokenParams.put("secretKey", secretKey);
+            tokenParams.put("path", path);
+            tokenParams.put("body", data.toString());
 
             String token = TokenUtil.generateToken(tokenParams);
 
-            headers.put("token",token);
+            headers.put("token", token);
             executor.addHeaders(headers);
             executor.contentType("application/json");
-            logger.info("data is {}",data.toString());
+            logger.info("data is {}", data.toString());
             PayResponseHandler payResponseHandler = new PayResponseHandler();
             executor.setPostBody(data.toString());
             executor.execute(payResponseHandler);
@@ -119,6 +118,76 @@ public class OauthServiceImpl implements OauthService {
         }
 
     }
+
+    @Override
+    public String realPay(PayVO payVO, HttpServletRequest request) {
+        if (StringUtils.isEmpty(payVO.getAccessToken())) {
+            return null;
+        } else {
+
+            HttpClientExecutor executor = new HttpClientPostExecutor(payUrl);
+            JSONObject data = new JSONObject();
+
+            data.put("accessToken", payVO.getAccessToken());
+            data.put("customerOpenId", payVO.getCustomerOpenId());
+            data.put("machineNum", payVO.getMachineNum());
+            data.put("shopNum", payVO.getShopNum());
+            data.put("requestNum", System.currentTimeMillis() + "" + System.currentTimeMillis());
+            data.put("amount", payVO.getAmount());
+            data.put("source", payVO.getSource());
+            data.put("tableNum", payVO.getTableNum());
+            data.put("callbackUrl", payVO.getCallBackUrl());
+
+            JSONObject extraInfo = new JSONObject();
+
+            extraInfo.put("pickNum", "071");
+            extraInfo.put("menuList", "青椒鸡蛋40.00*2,农家小炒肉50.00*3");
+
+            data.put("extraInfo", extraInfo.toString());
+
+
+            Map<String, String> headers = new HashMap<>();
+
+            Map<String, String> tokenParams = new HashMap<>();
+
+            String accessKey = "35649fdf38be45858ba7ea1de9404e0bd58c9846";
+            String secretKey = "12f3d4f076944921857ff10def2ef3c974d6c04f";//根据accessKey从passport_center库的key_pair表中查询
+
+            if (!org.springframework.util.StringUtils.isEmpty(payVO.getAccessKey())) {
+                accessKey = payVO.getAccessKey();
+            }
+            if (!org.springframework.util.StringUtils.isEmpty(payVO.getSecretKey())) {
+                secretKey = payVO.getSecretKey();
+            }
+
+            String timestamp = System.currentTimeMillis() + "";
+
+            String path = "/v1/payurl/create";
+
+            headers.put("accessToken", payVO.getAccessToken());
+            headers.put("accessKey", accessKey);
+            headers.put("timestamp", timestamp);
+
+
+            tokenParams.put("timestamp", timestamp);
+            tokenParams.put("secretKey", secretKey);
+            tokenParams.put("path", path);
+            tokenParams.put("body", data.toString());
+
+            String token = TokenUtil.generateToken(tokenParams);
+
+            headers.put("token", token);
+            executor.addHeaders(headers);
+            executor.contentType("application/json");
+            logger.info("data is {}", data.toString());
+            PayResponseHandler payResponseHandler = new PayResponseHandler();
+            executor.setPostBody(data.toString());
+            executor.execute(payResponseHandler);
+
+            return payResponseHandler.getDto().getOriginalText();
+        }
+    }
+
 
     @Override
     public AccessTokenDto retrieveAccessTokenDto(AuthAccessTokenDto tokenDto) {
@@ -150,7 +219,6 @@ public class OauthServiceImpl implements OauthService {
         }
 
     }
-
 
 
     @Override

@@ -11,7 +11,7 @@
 
 </head>
 <body  >
-<h2> <a style="text-decoration: none;" href="http://172.19.24.178:8090/main?page=123">点我测试</a></h2>
+<%--<h2> <a style="text-decoration: none;" href="http://172.19.24.178:8090/main?page=123">点我测试</a></h2>--%>
 
 <div>
     操作说明:
@@ -54,7 +54,7 @@
 <hr/>
 
 <div>
-    <strong>菜单</strong>
+    <strong>测试菜单</strong>
     <ul>
         <li>
             <p><a href="authorization_code">authorization_code</a><br/>授权码模式(即先登录获取code,再获取token) [最常用]</p>
@@ -62,9 +62,9 @@
         <li>
             <p><a href="password">password</a> <br/>密码模式(将用户名,密码传过去,直接获取token) [适用于移动设备]</p>
         </li>
-        <li>
-            <p><a href="client_credentials">client_credentials</a> <br/>客户端模式(无用户,用户向客户端注册,然后客户端以自己的名义向'服务端'获取资源)</p>
-        </li>
+        <%--<li>--%>
+            <%--<p><a href="client_credentials">client_credentials</a> <br/>客户端模式(无用户,用户向客户端注册,然后客户端以自己的名义向'服务端'获取资源)</p>--%>
+        <%--</li>--%>
         <li>
             <p><a href="implicit">implicit</a> <br/>简化模式(在redirect_uri 的Hash传递token; Auth客户端运行在浏览器中,如JS,Flash)</p>
         </li>
