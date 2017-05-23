@@ -269,7 +269,6 @@
     <profiles>
         <profile>
             <id>local</id>
-            <activation>true</activation>
             <properties>
                 <profiles.active>local</profiles.active>
             </properties>
@@ -278,6 +277,12 @@
             <id>test</id>
             <properties>
                 <profiles.active>test</profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
             </properties>
         </profile>
 
